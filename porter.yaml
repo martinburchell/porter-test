@@ -2,37 +2,16 @@
 # yamllint disable rule:line-length
 name: porter-test
 version: 0.1.0
-description: "Test Porter install with docker-compose and custom configuration"
+description: "Permissions test"
 registry: crateanon
 
-required:
-  - docker
-
 mixins:
-  - docker:
-      clientVersion: 20.10.7
-  - docker-compose:
-      clientVersion: 1.29.2
   - exec
 
 install:
-  - docker-compose:
-      description: "Docker Compose up"
-      arguments:
-        - up
-        - -d
-
-tty-test:
-  - docker-compose:
-      description: "Test if there is a tty"
-      arguments:
-        - run
-        - --rm porter_test
-        - /bin/bash -c "if [ -t 0 ]; then echo tty; else echo no tty; fi"
+  - exec:
+      command: ./wrong_permission.sh
 
 uninstall:
-  - docker-compose:
-      description: "Docker compose down"
-      arguments:
-        - down
-        - --remove-orphans
+  - exec:
+      command: ./wrong_permission.sh
