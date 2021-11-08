@@ -1,0 +1,4 @@
+version: "3.6"
+services:
+  porter_test:
+    image: python:3.6-slim-buster
